@@ -1,1 +1,1 @@
-python3 print
+python3 $print
