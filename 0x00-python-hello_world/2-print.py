@@ -1,1 +1,2 @@
-python3 $print
+#!/bin/bash
+python3 print
