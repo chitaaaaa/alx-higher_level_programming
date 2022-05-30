@@ -1,2 +1,2 @@
-printenv $PYCODE
-python3 $PYCODE
+#!/bin/bash
+python3 <<< $PYCODE
