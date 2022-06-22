@@ -67,4 +67,3 @@ class SinglyLinkedList:
             else:
                 txt += '\n'
         return txt
-
