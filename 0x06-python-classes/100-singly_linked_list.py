@@ -1,69 +1,70 @@
 #!/usr/bin/python3
-"""
-This module defines a Singly linked list
-"""
+""" Singly linked list"""
 
 
 class Node:
-    def __init__(self, data, next_node=None):
-        """Defines a node for a singly linked list
-        """
+    """defines a node of a singly linked list"""
+
+    def __init__(self, data, next_node=None) -> None:
+        """ initializer"""
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
+        """ getter"""
         return self.__data
 
     @data.setter
     def data(self, value):
-        if type(value) != int:
-            raise TypeError('data must be an integer')
-
+        """ setter"""
+        if not isinstance(value, int):
+            raise TypeError("data must be an integer")
         self.__data = value
 
     @property
     def next_node(self):
+        """ getter"""
         return self.__next_node
 
     @next_node.setter
     def next_node(self, value):
-        if value is not None and type(value) != Node:
-            raise TypeError('next_node must be a Node object')
+        """ setter"""
+        if value is not None and not isinstance(value, Node):
+            raise TypeError("next_node must be a Node object")
         self.__next_node = value
 
 
 class SinglyLinkedList:
+    """ singly linked list class"""
+
     def __init__(self):
-        """Defines the singly linked list
-        """
-        self.__head = None
+        """ initialization"""
+        self.head = None
+
+    def __str__(self):
+        """ make list printable"""
+        all_data = ""
+        tmp = self.head
+        while (tmp):
+            all_data += str(tmp.data) + "\n"
+            tmp = tmp.next_node
+        # return all data except the new line at the end
+        return all_data[:-1]
 
     def sorted_insert(self, value):
-        if self.__head is None:
-            self.__head = Node(value)
-        else:
-            current = self.__head
-            previous = None
-            while current and value > current.data:
-                previous = current
-                current = current.next_node
-            if current is None:
-                previous.next_node = Node(value)
-            elif current is self.__head and previous is None:
-                self.__head = Node(value, current)
-            else:
-                newNode = Node(value, current)
-                previous.next_node = newNode
+        """ insert into correct sorted position"""
+        NewNode = Node(value)
+        temp = self.head
+        if temp is None:
+            self.head = NewNode
+            return
+        if value < temp.data:
+            NewNode.next_node = self.head
+            self.head = NewNode
+            return
 
-    def __repr__(self):
-        node = self.__head
-        txt = ''
-        while 1:
-            txt += str(node.data)
-            node = node.next_node
-            if node.next_node is None:
-                break
-            else:
-                txt += '\n'
-        return txt
+        while (temp.next_node and temp.next_node.data < value):
+            temp = temp.next_node
+        NewNode.next_node = temp.next_node
+        temp.next_node = NewNode
